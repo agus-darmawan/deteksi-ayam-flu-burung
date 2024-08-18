@@ -1,14 +1,32 @@
-import threading
-import argparse
 import sys
-from loguru import logger
+import argparse
+import threading
 import cv2 as cv
+
+from loguru import logger
 from flask import Flask, render_template, Response, request, jsonify
+
 
 from detector import ChickenCombDetector
 
 class ChickenMonitoringApp(ChickenCombDetector):
-    def __init__(self, model_path, port=5001, debug: bool = False):
+    """
+    A Flask application for monitoring chickens using the ChickenCombDetector.
+
+    Attributes:
+        port (int): The port number for the Flask application.
+        app (Flask): Flask application instance.
+    """
+    
+    def __init__(self, model_path: str, port: int = 5010, debug: bool = False):
+        """
+        Initializes the ChickenMonitoringApp with model path, port, and debug mode.
+
+        Args:
+            model_path (str): Path to the YOLO model.
+            port (int, optional): Port number for the Flask application. Defaults to 5001.
+            debug (bool, optional): Enable debug mode. Defaults to False.
+        """
         super().__init__(model_path, debug=debug)
         self.port = port
         self.app = Flask(__name__)
@@ -16,8 +34,12 @@ class ChickenMonitoringApp(ChickenCombDetector):
 
         logger.remove()
         logger.add(sys.stdout, level="DEBUG" if debug else "CRITICAL", format="{time} - {level} - {message}")
+        logger.add(sys.stderr, format="<red>{level}</red> | <green>{message}</green>", colorize=True)
 
     def define_routes(self):
+        """
+        Defines the routes for the Flask application.
+        """
         @self.app.route('/')
         def index():
             return render_template('index.html')
@@ -45,6 +67,12 @@ class ChickenMonitoringApp(ChickenCombDetector):
             return jsonify(health_data)
 
     def generate_frames(self):
+        """
+        Generates video frames for the video feed.
+
+        Yields:
+            bytes: The JPEG-encoded frame.
+        """
         while True:
             frame = self.get_frame()
             if frame is None:
@@ -55,6 +83,9 @@ class ChickenMonitoringApp(ChickenCombDetector):
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
     def run(self):
+        """
+        Starts the Flask application.
+        """
         logger.info(f"Starting Flask app on port {self.port}.")
         self.app.run(host='0.0.0.0', port=self.port, threaded=True)
 
