@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deteksi Flu Burung pada Ayam Ternak</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+            <h1>Deteksi Flu Burung pada Ayam Ternak</h1>
+            <img id="video-feed" src="{{ url_for('video_feed') }}" alt="Video Feed">
+            <div class="notification" id="notification" style="display: none;"></div>
+            <div class="sensor-data">
+                <h2>Data Sensor :</h2>
+                <p>Kelembaban Tanah : <span id="moisture"></span> %</p>
+            </div>
+            <div class="stats">
+                <h2>Statistik Hasil Deteksi</h2>
+                <p>Ayam Flu Burung : <span id="flu-detected"></span> ekor</p>
+                <p>Total Ayam      : <span id="total-detected"></span> ekor</p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        Copyright OPSI 2024 SMAN 30 Jakarta
+    </footer>
+    <script src="{{ url_for('static', filename='script.js')}}"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+/path
+/__pycache__
+*/.vscode
+*/.idea
+*/.pytest_cache
+*/.mypy_cache
+*/.tox
+*/.eggs
+*/.venv
+*/.vs
+*/.mypy_cache
+*/.pytest_cache
+*/.coverage
+*/.DS_Store
