@@ -62,13 +62,13 @@ class ChickenMonitoringApp(ChickenCombDetector):
             data = self.get_sensor_data()
             health_data = self.get_health_data()
             data.update(health_data)
-            logger.info(f"Sensor data requested: {data}")
+            logger.debug(f"Sensor data requested: {data}")
             return jsonify(data)
 
         @self.app.route('/chicken_status')
         def chicken_status():
             health_data = self.get_health_data()
-            logger.info(f"Chicken status requested: {health_data}")
+            logger.debug(f"Chicken status requested: {health_data}")
             return jsonify(health_data)
 
     def generate_frames(self):
