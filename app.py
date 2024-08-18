@@ -2,7 +2,7 @@ import sys
 import argparse
 import threading
 import cv2 as cv
-
+ 
 import logging
 from loguru import logger
 from flask import Flask, render_template, Response, request, jsonify
