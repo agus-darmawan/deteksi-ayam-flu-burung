@@ -1,0 +1,6 @@
+myits:
+  username: "your_username"
+  password: "your_password"
+
+google_form:
+  url: "https://forms.gle/7KTYJYeTmJm91kV9A" # URL of the Google Form you can change to your google form URL
